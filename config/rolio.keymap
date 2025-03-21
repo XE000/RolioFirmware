@@ -122,7 +122,7 @@
         layer_1 {
             label = "Symbols";
             sensor-bindings =
-                <&inc_dec_kp K_SCROLL_UP K_SCROLL_DOWN>,
+                <&inc_dec_kp PAGE_UP PAGE_DOWN>,
                 <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>;
 
             bindings = <

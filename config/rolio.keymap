@@ -128,16 +128,14 @@
             bindings = <
 &kp GRAVE   &kp N1           &kp N2        &kp N3                &kp N4                 &kp N5                                                 &kp N6            &kp N7            &kp N8             &kp N9          &kp N0       &trans
 &kp DOLLAR  &kp AT_SIGN      &kp PLUS      &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp EXCLAMATION                                        &kp EQUAL         &kp LEFT_BRACE    &kp RIGHT_BRACE    &kp MINUS       &kp PERCENT  &trans
-&kp POUND   &kp NON_US_HASH  &kp ASTERISK  &kp LESS_THAN         &kp GREATER_THAN       &kp AMPERSAND    &kp LG(PERIOD)        &kp C_MUTE      &kp RS(PIPE)      &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp UNDERSCORE  &trans       &fwdbckslh
+&kp POUND   &kp NON_US_HASH  &kp ASTERISK  &kp LESS_THAN         &kp GREATER_THAN       &kp AMPERSAND    &kp HOME              &kp END         &kp RS(PIPE)      &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp UNDERSCORE  &trans       &fwdbckslh
                              &trans        &trans                &trans                 &trans           &kp LEFT_PARENTHESIS  &kp LEFT_BRACE  &kp LEFT_BRACKET  &trans            &trans             &trans
             >;
         };
 
         layer_2 {
             label = "Function";
-            sensor-bindings =
-                <&inc_dec_kp C_FAST_FORWARD C_REWIND>,
-                <&inc_dec_kp C_NEXT C_PREVIOUS>;
+            sensor-bindings = <&inc_dec_kp UP DOWN>, <&inc_dec_kp LEFT RIGHT>;
 
             bindings = <
 &kp ESCAPE  &kp F1      &kp F2        &kp F3        &kp F4      &kp F5                                      &kp F6    &kp F7    &kp F8     &kp F9     &kp F10    &kp F11

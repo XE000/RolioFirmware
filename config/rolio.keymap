@@ -1,0 +1,158 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/backlight.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/outputs.h>
+
+#define MACOS     0
+#define FKEYS     1
+#define NUMBERS   2
+#define WINDOWS   3
+#define W_FKEYS   4
+#define W_NUMBERS 5
+#define MATHS     6
+#define KB_CONFIG 7
+
+/ {
+    conditional_layers { compatible = "zmk,conditional-layers"; };
+
+    behaviors {
+        fwdbckslh: fwdbckslh {
+            compatible = "zmk,behavior-tap-dance";
+            display-name = "Shift/Caps Lock Tap Dance";
+            #binding-cells = <0>;
+            bindings = <&kp FSLH>, <&kp BSLH>;
+
+            label = "FWD BCK Slash";
+            tapping-term-ms = <500>;
+        };
+
+        holdtap: holdtap {
+            compatible = "zmk,behavior-hold-tap";
+            label = "Hold Tap";
+            bindings = <&mo>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <500>;
+        };
+
+        dotcomma: dotcomma {
+            compatible = "zmk,behavior-tap-dance";
+            display-name = "Shift/Caps Lock Tap Dance";
+            #binding-cells = <0>;
+            bindings = <&kp COMMA>, <&kp PERIOD>;
+
+            label = "Dot and Comma";
+            tapping-term-ms = <500>;
+        };
+
+        questionexcl: questionexcl {
+            compatible = "zmk,behavior-tap-dance";
+            label = "Question and Excl";
+            #binding-cells = <0>;
+            bindings = <&kp QUESTION>, <&kp EXCLAMATION>;
+
+            tapping-term-ms = <500>;
+        };
+
+        esctab: esctab {
+            compatible = "zmk,behavior-tap-dance";
+            label = "Esc Tab";
+            #binding-cells = <0>;
+            bindings = <&kp TAB>, <&kp ESCAPE>;
+
+            tapping-term-ms = <500>;
+        };
+
+        holdtapkp: holdtapkp {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOLDTAPKP";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <500>;
+        };
+
+        holdtapfast: holdtapfast {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOLDTAPFAST";
+            bindings = <&mo>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <250>;
+        };
+    };
+
+    macros {
+        ifblock: ifblock {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp I &kp F &kp LPAR &kp RPAR &kp LEFT_BRACE &kp RIGHT_BRACE>;
+            label = "IFBLOCK";
+        };
+
+        ifelse: ifelse {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp I &kp F &kp LPAR &kp RPAR &kp LEFT_BRACE &kp RBRC &kp E &kp L &kp S &kp E &kp LEFT_BRACE &kp RBRC>;
+            label = "IFELSE";
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer {
+            label = "QWERTY";
+            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp LEFT RIGHT>;
+            bindings = <
+&esctab           &kp Q          &kp W          &kp E      &kp R     &kp T                                                            &kp Y      &kp U  &kp I  &kp O      &kp P             &kp ENTER
+&kp LA(SPACE)     &kp A          &kp S          &kp D      &kp F     &kp G                                                            &kp H      &kp J  &kp K  &kp L      &kp SINGLE_QUOTE  &kp EQUAL
+&kp LEFT_CONTROL  &questionexcl  &kp Z          &kp X      &kp C     &kp V           &kp LA(TAB)  &kp LC(SPACE)                       &kp B      &kp N  &kp M  &kp MINUS  &kp SEMICOLON     &kp RIGHT_ALT
+                                 &kp LG(LS(Z))  &kp LG(Z)  &kp LGUI  &kp LEFT_SHIFT  &kp SPACE    &holdtapkp BACKSPACE RA(BACKSPACE)  &dotcomma  &mo 1  &mo 2  &mo 3
+            >;
+        };
+
+        layer_1 {
+            label = "Symbols";
+            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp LEFT RIGHT>;
+            bindings = <
+&kp GRAVE   &kp N1       &kp N2        &kp N3                &kp N4                 &kp N5                                                 &kp N6            &kp N7            &kp N8             &kp N9          &kp N0       &trans
+&kp DOLLAR  &kp AT_SIGN  &kp PLUS      &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp EXCLAMATION                                        &kp EQUAL         &kp LEFT_BRACE    &kp RIGHT_BRACE    &kp MINUS       &kp PERCENT  &trans
+&trans      &kp POUND    &kp ASTERISK  &kp LESS_THAN         &kp GREATER_THAN       &kp AMPERSAND    &kp LG(PERIOD)        &trans          &kp RS(PIPE)      &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp UNDERSCORE  &trans       &fwdbckslh
+                         &trans        &trans                &trans                 &trans           &kp LEFT_PARENTHESIS  &kp LEFT_BRACE  &kp LEFT_BRACKET  &trans            &trans             &trans
+            >;
+        };
+
+        layer_2 {
+            label = "Function";
+            sensor-bindings =
+                <&inc_dec_kp C_VOL_UP C_VOL_DN>,
+                <&inc_dec_kp PAGE_UP PAGE_DOWN>;
+
+            bindings = <
+&kp ESCAPE  &kp F1      &kp F2        &kp F3        &kp F4      &kp F5                            &kp F6    &kp F7    &kp F8     &kp F9     &kp F10    &kp F11
+&trans      &bt BT_PRV  &bt BT_NXT    &kp C_PREV    &kp C_PP    &kp C_NEXT                        &kp HOME  &kp UP    &kp END    &kp PSCRN  &kp PG_UP  &kp F12
+&trans      &bl BL_TOG  &bl BL_SET 2  &kp C_VOL_DN  &kp C_MUTE  &kp C_VOL_UP  &kp C_MUTE  &trans  &kp LEFT  &kp DOWN  &kp RIGHT  &trans     &kp PG_DN  &kp F13
+                        &trans        &trans        &trans      &trans        &trans      &trans  &trans    &trans    &trans     &trans
+            >;
+        };
+
+        layer_3 {
+            label = "Firmware";
+            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp LEFT RIGHT>;
+            bindings = <
+&out OUT_TOG  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                  &trans  &trans  &trans  &trans  &trans  &trans
+&trans        &bt BT_PRV    &bt BT_NXT    &trans        &trans        &trans                        &trans  &trans  &trans  &trans  &trans  &trans
+&trans        &trans        &bt BT_CLR    &bl BL_DEC    &bl BL_TOG    &bl BL_INC    &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                            &trans        &trans        &trans        &trans        &trans  &trans  &trans  &trans  &trans  &trans
+            >;
+        };
+    };
+};
